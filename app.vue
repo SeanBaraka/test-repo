@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import htmlToPdfmake from "html-to-pdfmake";
-import { table } from "console";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 const { data, pending } = useFetch('/api/prices', { key: Math.random().toString()}) 
 const priceData = ref({});
 
+const { public: { BASE_URL }} = useRuntimeConfig();
+
 pdfMake.fonts = {
   Anonymous: {
-    normal: 'http://localhost:3000/font/Anonymous_Pro.ttf',
-    bold: 'http://localhost:3000/font/Anonymous_Pro_B.ttf',
-    bolditalics: 'http://localhost:3000/font/Anonymous_Pro_BI.ttf',
-    italics: 'http://localhost:3000/font/Anonymous_Pro_I.ttf'
+    normal: `${BASE_URL}/font/Anonymous_Pro.ttf`,
+    bold: `${BASE_URL}/font/Anonymous_Pro_B.ttf`,
+    bolditalics: `${BASE_URL}/font/Anonymous_Pro_BI.ttf`,
+    italics: `${BASE_URL}/font/Anonymous_Pro_I.ttf`
   },
 }
 
